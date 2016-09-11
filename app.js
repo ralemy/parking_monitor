@@ -24,7 +24,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
-
+var db = require("./modules/db").init();
+app.use("/test",function(req,res){
+  db.findUser("reza").then((user)=> {console.log(!!user); res.json(user)}, (error)=>res.status(503).send(error));
+});
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
