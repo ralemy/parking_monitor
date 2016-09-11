@@ -5,10 +5,15 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
 
 var db = require("./modules/db").init();
+var passport = require('passport');
+var expressSession = require('express-session');
+var flash = require('connect-flash');
+var authenticator = require("./modules/authenticator")(passport,db);
+
+var routes = require('./routes/index')(passport);
+var users = require('./routes/users');
 
 var app = express();
 
@@ -27,14 +32,26 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/', routes);
+
+app.use(expressSession({
+    secret: 'Thequickbrownfoxjumpsoverthelazybahram',
+    resave: true,
+    saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Using the flash middleware provided by connect-flash to store messages in session
+// and displaying in templates
+app.use(flash());
+
+
 app.use('/users', users);
-app.use("/test", function (req, res) {
-    req.db.findUser("reza").then((user)=> {
-        console.log(!!user);
-        res.json(user)
-    }, (error)=>res.status(503).send(error));
+app.use("/app/", authenticator, function (req, res) {
+    res.render('app', { flash: req.flash("message")[0], title: 'Parking Monitor',angularApp:"parkApp" });
 });
+app.use('/', routes);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var err = new Error('Not Found');

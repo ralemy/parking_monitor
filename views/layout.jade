@@ -6,6 +6,6 @@ html(ng-app="#{angularApp}")
     title= title
     link(rel='stylesheet', href='/stylesheets/app.css')
   body
+    if flash
+      div.alert.alert-warning #{flash}
     block content
-    script(src="/javascripts/app.js")
-    block scripts

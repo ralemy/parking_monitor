@@ -3,10 +3,10 @@
  * Collection of services used in the angular app.
  */
 
-module.exports = (function () {
-    angular.module("ZonerApp").factory("Project", ["Requester", "_", "$http", function (Requester, _, $http) {
+module.exports = (function (app) {
+    app.factory("Project", ["Requester", "_", "$http", function (Requester, _, $http) {
         return Object.create({
         }, {
         });
     }]);
-})();
+})(angular.module(window.mainApp));
