@@ -14,6 +14,7 @@ var authenticator = require("./modules/authenticator")(passport,db);
 
 var routes = require('./routes/index')(passport);
 var users = require('./routes/users');
+var templates = require("./routes/templates");
 
 var app = express();
 
@@ -50,6 +51,7 @@ app.use('/users', users);
 app.use("/app/", authenticator, function (req, res) {
     res.render('app', { flash: req.flash("message")[0], title: 'Parking Monitor',angularApp:"parkApp" });
 });
+app.use("/templates", templates);
 app.use('/', routes);
 
 // catch 404 and forward to error handler

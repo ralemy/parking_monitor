@@ -6,6 +6,7 @@ html(ng-app="#{angularApp}")
         title= title
         link(rel='stylesheet', href='/stylesheets/app.css')
     body
-        .container here goes the main pages.
+        .container
+            .ui-view
         script(src="/javascripts/app.js")
         block scripts
