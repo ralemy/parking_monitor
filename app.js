@@ -15,6 +15,7 @@ var authenticator = require("./modules/authenticator")(passport,db);
 var routes = require('./routes/index')(passport);
 var users = require('./routes/users');
 var templates = require("./routes/templates");
+var api = require("./routes/api");
 
 var app = express();
 
@@ -49,10 +50,12 @@ app.use(flash());
 
 app.use('/users', users);
 app.use("/app/", authenticator, function (req, res) {
-    res.render('app', { flash: req.flash("message")[0], title: 'Parking Monitor',angularApp:"parkApp" });
+    res.render('app', { username: req.user.name, flash: req.flash("message")[0], title: 'Parking Monitor',angularApp:"parkApp" });
 });
+app.use("/api",authenticator,api);
 app.use("/templates", templates);
 app.use('/', routes);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

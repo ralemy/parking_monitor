@@ -5,7 +5,17 @@ html(ng-app="#{angularApp}")
         meta(name="viewport", content="width=device-width, initial-scale=1")
         title= title
         link(rel='stylesheet', href='/stylesheets/app.css')
-    body
+    body(ng-controller="topLevel")
+        #username(style="display:none;") #{username}
+        nav.navbar.navbar-default
+            .container-fluid
+                .navbar-right.btn-group(uib-dropdown)
+                    button.btn.btn-default#split-button(type="button") {{user}}
+                    button.btn.btn-default(type="button", uib-dropdown-toggle)
+                        span.caret
+                    ul.dropdown-menu(uib-dropdown-menu role="menu" aria-labelledby="split-button")
+                        li(role="menuitem")
+                            a(href="/logout") LogOut
         .container
             .ui-view
         script(src="/javascripts/app.js")

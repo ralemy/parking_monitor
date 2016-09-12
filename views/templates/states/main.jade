@@ -1,1 +1,2 @@
-div here goes the main state
+.list-group
+    a.list-group-item(ui-sref="street({id:street.name})" ng-repeat="street in streets track by street.name") {{street.name}}

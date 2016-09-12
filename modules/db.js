@@ -9,6 +9,7 @@ const sqlite3 = require("sqlite3").verbose(),
 
 let db = null;
 
+
 module.exports = {
     init:function(name){
         db = new sqlite3.Database(name || "db.sqlite");
@@ -22,5 +23,10 @@ module.exports = {
         let defer = q.defer();
         db.get("Select * from users where name like ? ", name || "", defer.makeNodeResolver());
         return defer.promise.then((user)=>user || q.reject("User Not Found"));
+    },
+    getStreets:function(){
+        let defer = q.defer();
+        db.all("Select * from streets", defer.makeNodeResolver());
+        return defer.promise;
     }
 };
