@@ -3,8 +3,8 @@
  * Collection of miscellaneous directives used in the app
  */
 
-module.exports=(function(module){
-    module.directive("fromTemplate",[function(){
+module.exports=(function(app){
+    app.directive("fromTemplate",[function(){
         return {
             templateUrl: function(element,attrs){
                 return "/templates/" + attrs.fromTemplate;

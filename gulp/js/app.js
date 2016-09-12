@@ -13,7 +13,7 @@ module.exports=(function(){
     window.mainApp = document.body.parentElement.getAttribute("ng-app");
     var lodash = require("../lib/lodash.min.js"),
         buildString = "1.0.0-SNAPSHOT";
-    return angular.module(window.mainApp,["ngSanitize","ngAnimate","ui.router","ui.bootstrap"])
+    angular.module(window.mainApp,["ngSanitize","ngAnimate","ui.router","ui.bootstrap"])
         .factory("_",function(){
             return lodash;
         }).constant("BuildString",buildString);

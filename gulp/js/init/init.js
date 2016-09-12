@@ -19,6 +19,8 @@ module.exports = (function (app) {
                 url: "/street/:id",
                 templateUrl: "/templates/states/street",
                 controller: "Street"
+            }).state("lot",{
+
             });
         }]);
 })(angular.module(window.mainApp));
